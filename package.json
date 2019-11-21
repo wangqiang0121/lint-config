@@ -1,0 +1,22 @@
+{
+  "name": "lint-config",
+  "version": "1.0.0",
+  "description": "### ESLint 的基本配置 ### Lint & Prettier & VS code 组合配置 ### create-react-app 及 antd-design模板配置解析 ### dxymom-hybrid-gaia 及 dxymom-client 配置解析",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangqiang0121/lint-config.git"
+  },
+  "author": "wangqiang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wangqiang0121/lint-config/issues"
+  },
+  "homepage": "https://github.com/wangqiang0121/lint-config#readme",
+  "devDependencies": {
+    "eslint": "^6.6.0"
+  }
+}
