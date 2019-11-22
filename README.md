@@ -38,8 +38,18 @@
     - 安装 `eslint` 插件
     - vscode的配置分为 `User` 和 `Project`
 
-#### 了解 npm `peerDependencies` 概念
-项目依赖的包不再安装在包的`node_modules`目录下，而是安装在项目的`node_modules`下，使得整个依赖树更加扁平，更高效，但安装使用的过程中要注意文档说明和源码结构。
+#### 了解 npm 包的结构
+- `devDependencies`
+
+项目开发过程中的依赖
+
+- `dependencies`
+
+项目源码的依赖
+
+- `peerDependencies`
+
+项目源码的依赖。但是依赖的包不再安装在包的`node_modules`目录下，而是安装在项目的`node_modules`下，使得整个依赖树更加扁平，更高效，但安装使用的过程中要注意文档说明和源码结构。
 
 ### 分析 `create-react-app` 与 `antd-design-pro` 的 Lint 配置
 
@@ -65,9 +75,6 @@
     - 配置集合(ts+react+style+prettier)
 
 
-[eslint-config-airbnb vs eslint-config-standard vs eslint-config-react-app](https://www.npmtrends.com/eslint-config-airbnb-vs-eslint-config-standard-vs-eslint-config-react-app)
-
-
 ### 项目 Lint 配置框架
 - 以 `ESLint` 为基础
     - 校验 js 代码的配置包
@@ -90,6 +97,95 @@
 
 ### 实战：搭建项目 Lint 配置
 
-
+1. 确定配置框架
+2. 筛选配置包，了解包的结构和配置说明
 - [eslint-config-airbnb vs eslint-config-standard vs eslint-config-react-app](https://www.npmtrends.com/eslint-config-airbnb-vs-eslint-config-standard-vs-eslint-config-react-app)
+3. 组合配置
+    - `.eslintrc.js`
+    - `.stylelintrc.js`
+    - `.prettierrc`
+    - `.vscode/setting.json`
+4. 设计`npm`脚本
+    - `npm script`
+    - `husky`
+    -  `lint-stage`
+5. 项目 Lint 修复及规则调整
 
+
+### 经典 Lint 配置包解析
+
+#### [eslint-config-standard](https://github.com/standard/eslint-config-standard)
+- 项目的前置依赖
+```javascript
+"eslint": "^6.2.2",
+"eslint-plugin-import": "^2.18.0",
+"eslint-plugin-node": "^10.0.0",
+"eslint-plugin-promise": "^4.2.1",
+"eslint-plugin-standard": "^4.0.0",
+"tape": "^4.8.0"
+```
+通过多个plugins, 引入了许多新的校验规则。最终输出配置。
+- 配置方式
+    - 安装前置依赖
+    - 使用 `extends: ['standard']`
+
+### [eslint-config-airbnb](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb)
+- 项目依赖
+```javascript
+"eslint-config-airbnb-base": "^14.0.0",
+"object.assign": "^4.1.0",
+"object.entries": "^1.1.0"
+```
+- 项目前置依赖
+```javascript
+"eslint": "^5.16.0 || ^6.1.0",
+"eslint-plugin-import": "^2.18.2",
+"eslint-plugin-jsx-a11y": "^6.2.3",
+"eslint-plugin-react": "^7.15.1",
+"eslint-plugin-react-hooks": "^1.7.0"
+```
+- 配置方式
+    - 安装前置依赖
+    - 使用 `extends: ['airbnb']`
+
+### [eslint-config-prettier](https://github.com/prettier/eslint-config-prettier)
+Turns off all rules that are unnecessary or might conflict with Prettier.
+关闭所有和`Prettier`有冲突的规则
+- 项目前置依赖
+基本没有
+- 配置方式
+    - 在 `ESLint` 的`extends`中配置
+```JavaScript
+"prettier",
+"prettier/@typescript-eslint",
+"prettier/babel",
+"prettier/flowtype",
+"prettier/react",
+"prettier/standard",
+"prettier/unicorn",
+"prettier/vue"
+```
+引入了那些特殊的配置包，对应的需要一个抵消冲突的prettier 配置
+
+### [eslint-plugin-prettier](https://github.com/prettier/eslint-plugin-prettier)
+通过 `ESLint` 运行 `Prettier` 规则。
+- 项目的前置依赖
+基本没有
+- 配置方式
+```
+"extends": ["plugin:prettier/recommended"]
+```
+启用引入的新规则
+
+### [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin)
+- 项目的前置依赖
+```javascript
+"@typescript-eslint/parser": "^2.0.0",
+"eslint": "^5.0.0 || ^6.0.0"
+```
+ts 项目需要使用 `@typescript-eslint/parser` 进行代码解析
+
+- 配置方式
+```javscript
+"extends": ["plugin:@typescript-eslint/recommended"]
+```
